@@ -19,6 +19,7 @@
     th, td {
       border: 1px solid #ddd;
       padding: 8px;
+      text-align: center;
     }
     th {
       background-color: #f2f2f2;
@@ -48,22 +49,6 @@
     }
   </style>
 </head>
-<script src="js/navi.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    loadBoardData();
-  });
-  function loadBoardData() {
-    const data = JSON.parse(localStorage.getItem('boardData')) || [];
-    const tableBody = document.getElementById('board-body');
-    tableBody.innerHTML = ''; // 초기화
-    data.forEach((item, index) => {
-      const row = document.createElement('tr');
-      row.innerHTML = `<td>${index + 1}</td><td><a href="detail.html?index=${index}">${item.제목}</a></td><td>${item.글쓴이}</td><td>${item.작성일}</td>`;
-      tableBody.appendChild(row);
-    });
-  }
-</script>
 <body>
 <div id="header-placeholder"></div>
 <h1>공지사항</h1>
@@ -85,5 +70,23 @@
     </tbody>
   </table>
 </div>
+<script src="js/navi.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    loadBoardData();
+  });
+
+  function loadBoardData() {
+    const data = JSON.parse(localStorage.getItem('boardData')) || [];
+    const tableBody = document.getElementById('board-body');
+    tableBody.innerHTML = ''; // 초기화
+    const reversedData = data.reverse();
+    reversedData.forEach((item, index) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `<td>${reversedData.length - index}</td><td><a href="detail.html?index=${index}">${item.제목}</a></td><td>${item.글쓴이}</td><td>${item.작성일}</td>`;
+      tableBody.appendChild(row);
+    });
+  }
+</script>
 </body>
 </html>
