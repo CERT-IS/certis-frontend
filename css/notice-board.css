@@ -1,0 +1,36 @@
+.notice-board {
+  width: 40%;
+  max-width: 600px;
+  margin: 20px;
+  position: relative;
+  left : 1%; 
+}
+
+.notice-board-header {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.notice-board table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.notice-board th, .notice-board td {
+  border: none; /* 테두리를 없앰 */
+  padding: 10px;
+  text-align: left;
+}
+
+.notice-board th {
+  background-color: #f9f9f9;
+}
+
+.notice-board td {
+  cursor: pointer;
+}
+
+.notice-board tr:hover {
+  background-color: #e0e0e0; /* 마우스를 올릴 때 모든 셀의 배경 색상 변경 */
+}

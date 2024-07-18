@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>새 글 작성</title>
+  <link rel="stylesheet" href="css/navi.css">
+  <style>
+    h1 {
+      margin-left: 10px; /* 왼쪽 여백을 추가하여 오른쪽으로 이동 */
+      margin-top: 20px;  /* 위쪽 여백 추가 */
+      margin-bottom: 20px; /* 아래쪽 여백 추가 */
+    }
+    .form-container {
+      margin: 20px;
+    }
+    .form-container input, .form-container textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+    }
+    .form-container button {
+      padding: 10px 20px;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<script src="js/navi.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    loadBoardData();
+  });
+
+  function addPost() {
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
+    const author = '익명';
+    const date = new Date().toISOString().split('T')[0];
+
+    if (title && content) {
+      const data = JSON.parse(localStorage.getItem('boardData')) || [];
+      data.push({ 제목: title, 내용: content, 글쓴이: author, 작성일: date });
+      localStorage.setItem('boardData', JSON.stringify(data));
+      window.location.href = 'report.html';
+    } else {
+      alert('제목과 내용을 입력해주세요.');
+    }
+  }
+</script>
+<body>
+<div id="header-placeholder"></div>
+<h1>공지사항</h1>
+<div class="form-container">
+  <input type="text" id="title" placeholder="제목">
+  <textarea id="content" rows="10" placeholder="내용"></textarea>
+  <button onclick="addPost()">글 작성</button>
+</div>
+</body>
+</html>
