@@ -39,8 +39,14 @@
       font-weight: bold;
     }
     .notice-content {
-      border-top: 2px solid #ccc;
-      padding-top: 20px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      background-color: #f5f5f5; /* 배경색 추가 */
+      min-height: 200px; /* 최소 높이 설정 */
+    }
+    .delete-button-container {
+      text-align: right; /* 오른쪽 정렬 */
+      margin-top: 10px;
     }
     .delete-button {
       background-color: #ff4d4d;
@@ -48,14 +54,13 @@
       border: none;
       padding: 10px 20px;
       cursor: pointer;
-      margin-top: 20px;
+      display: inline-block; /* 인라인 블록 요소로 설정 */
     }
   </style>
 </head>
 <script src="js/navi.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-  
     const urlParams = new URLSearchParams(window.location.search);
     const index = urlParams.get('index');
     loadPostDetail(index);
@@ -104,8 +109,8 @@
       <td colspan="2"></td>
     </tr>
   </table>
-  <div class="notice-content">
-    <div id="post-content"></div>
+  <div class="notice-content" id="post-content"></div>
+  <div class="delete-button-container">
     <button id="delete-button" class="delete-button">삭제</button>
   </div>
 </div>

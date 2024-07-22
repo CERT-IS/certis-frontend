@@ -83,7 +83,11 @@
     const reversedData = data.reverse();
     reversedData.forEach((item, index) => {
       const row = document.createElement('tr');
-      row.innerHTML = `<td>${reversedData.length - index}</td><td><a href="detail.html?index=${index}">${item.제목}</a></td><td>${item.글쓴이}</td><td>${item.작성일}</td>`;
+      row.innerHTML = `
+      <td>${reversedData.length - index}</td>
+      <td><a href="detail.html?index=${index}">${item.제목}</a></td>
+      <td>${item.글쓴이}</td>
+      <td>${item.작성일}</td>`;
       tableBody.appendChild(row);
     });
   }

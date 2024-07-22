@@ -28,6 +28,66 @@
         .banner img.active {
             opacity: 1;
         }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .calendar-container {
+            width: 20%;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .calendar-header button {
+            padding: 5px 10px;
+            font-size: 16px;
+            background-color: transparent;
+            color: black;
+            border: none;
+            cursor: pointer;
+        }
+
+     
+        .calendar-header h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .date-display {
+            font-size: 16px;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .event-list {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+            height: 150px;
+            overflow-y: auto;
+        }
+
+        .event {
+            background-color: #ffcccb; /* 연붉은색 */
+            margin: 2px;
+            padding: 2px;
+            border-radius: 3px;
+        }
+
+        .notice-board {
+            width: 60%;
+        }
     </style>
 </head>
 <body>
@@ -37,20 +97,43 @@
         <img src="img/img2.JPG">
         <img src="img/img3.JPG">
     </div>
-    <div class="notice-board">
-        <div class="notice-board-header">공지사항</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
-                </tr>
-            </thead>
-            <tbody id="notice-list">
-            </tbody>
-        </table>
+    <div class="container">
+        <div class="notice-board">
+            <div class="notice-board-header">공지사항</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                    </tr>
+                </thead>
+                <tbody id="notice-list">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <button id="prevDayInternal">&lt;</button>
+                <h2>내부 행사</h2>
+                <button id="nextDayInternal">&gt;</button>
+            </div>
+            <div class="date-display" id="internalDate"></div>
+            <div id="internalEvents" class="event-list"></div>
+        </div>
+
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <button id="prevDayExternal">&lt;</button>
+                <h2>외부 행사</h2>
+                <button id="nextDayExternal">&gt;</button>
+            </div>
+            <div class="date-display" id="externalDate"></div>
+            <div id="externalEvents" class="event-list"></div>
+        </div>
     </div>
+    
     <script src="js/navi.js"></script>
     <script>
         let currentIndex = 0;
@@ -81,6 +164,59 @@
                 noticeList.appendChild(row);
             });
         }
+
+        // Calendar Event Handling
+        let currentInternalDate = new Date();
+        let currentExternalDate = new Date();
+        const internalEvents = JSON.parse(localStorage.getItem('internalEvents')) || [];
+        const externalEvents = JSON.parse(localStorage.getItem('externalEvents')) || [];
+
+        function updateEventList(eventType) {
+            const eventList = document.getElementById(`${eventType}Events`);
+            const dateDisplay = document.getElementById(`${eventType}Date`);
+            const currentDate = eventType === 'internal' ? currentInternalDate : currentExternalDate;
+            eventList.innerHTML = '';
+            const dateStr = currentDate.toISOString().split('T')[0];
+
+            dateDisplay.textContent = currentDate.toLocaleDateString('ko-KR');
+
+            const events = eventType === 'internal' ? internalEvents : externalEvents;
+            const dayEvents = events.filter(event => event.date === dateStr);
+
+            if (dayEvents.length === 0) {
+                eventList.innerHTML = '<p>오늘 일정이 없습니다.</p>';
+            } else {
+                dayEvents.forEach(event => {
+                    const eventDiv = document.createElement('div');
+                    eventDiv.classList.add('event');
+                    eventDiv.textContent = event.title;
+                    eventList.appendChild(eventDiv);
+                });
+            }
+        }
+
+        document.getElementById('prevDayInternal').addEventListener('click', function() {
+            currentInternalDate.setDate(currentInternalDate.getDate() - 1);
+            updateEventList('internal');
+        });
+
+        document.getElementById('nextDayInternal').addEventListener('click', function() {
+            currentInternalDate.setDate(currentInternalDate.getDate() + 1);
+            updateEventList('internal');
+        });
+
+        document.getElementById('prevDayExternal').addEventListener('click', function() {
+            currentExternalDate.setDate(currentExternalDate.getDate() - 1);
+            updateEventList('external');
+        });
+
+        document.getElementById('nextDayExternal').addEventListener('click', function() {
+            currentExternalDate.setDate(currentExternalDate.getDate() + 1);
+            updateEventList('external');
+        });
+
+        updateEventList('internal');
+        updateEventList('external');
     </script>
 </body>
 </html>
