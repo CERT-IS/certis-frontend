@@ -6,7 +6,6 @@
   <title>동아리 소개</title>
   <link rel="stylesheet" href="css/navi.css">
   <style>
-    /* CSS 내용 */
     .calendar-container {
       margin-bottom: 50px;
     }
@@ -18,19 +17,19 @@
     }
     .calendar-header button {
       padding: 10px 15px;
-      font-size: 16px;
+      font-size: 17px;
       background-color: #ff0000;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 10px;
       cursor: pointer;
     }
     .calendar-header button:hover {
       background-color: #b30015;
     }
     .calendar-header h2 {
-      margin: 0;
-      font-size: 24px;
+      margin: 10px;
+      font-size: 30px;
     }
     #calendar1, #calendar2 {
       display: grid;
@@ -42,7 +41,7 @@
       border: 1px solid #ccc;
       min-height: 100px;
       position: relative;
-      background-color: #f9f9f9;
+      background-color: white;
     }
     .day-header {
       background-color: #f0f0f0;
@@ -52,10 +51,11 @@
     }
     .event {
       background-color: #ffcccb;
-      margin: 2px;
+      margin: 5px;
       padding: 2px;
       border-radius: 3px;
       position: relative;
+      padding-left:10px;
     }
     .event button {
       position: absolute;
@@ -71,22 +71,30 @@
       line-height: 16px;
       text-align: center;
     }
-  
     hr {
       margin: 50px 0;
-      border: 1px solid #ccc;
+      border: 1px solid #e7e6e6;
+    }
+    #prevMonth1, #prevMonth2 {
+      margin-left: 15px; 
+      font-size:20px;
+    }
+    #nextMonth1, #nextMonth2 {
+      margin-right: 15px; 
+      font-size:20px;
     }
   </style>
 </head>
 <body>
 <div id="header-placeholder"></div>
 <div class="banner"></div>
-
+<hr>
 <div class="calendar-container">
+  <h1 style="text-align: center">내부 행사</h1>
   <div class="calendar-header">
-    <button id="prevMonth1">이전 달</button>
+    <button id="prevMonth1"><</button>
     <h2 id="currentMonth1">내부 행사</h2>
-    <button id="nextMonth1">다음 달</button>
+    <button id="nextMonth1">></button>
   </div>
   <div id="calendar1"></div>
 </div>
@@ -94,16 +102,19 @@
 <hr>
 
 <div class="calendar-container">
+  <h1 style="text-align: center">외부 행사</h1>
   <div class="calendar-header">
-    <button id="prevMonth2">이전 달</button>
+    <button id="prevMonth2" ><</button>
     <h2 id="currentMonth2">외부 행사</h2>
-    <button id="nextMonth2">다음 달</button>
+    <button id="nextMonth2">></button>
   </div>
   <div id="calendar2"></div>
 </div>
 
+<hr>
+
 <div>
-  <h3>이벤트 추가</h3>
+  <h2>이벤트 추가</h2>
   <label for="eventDate">날짜:</label>
   <input type="date" id="eventDate">
   <label for="eventTitle">제목:</label>

@@ -12,7 +12,7 @@
       margin-bottom: 20px; /* 아래쪽 여백 추가 */
     }
     table {
-      width: 90%;
+      width: 99%;
       border-collapse: collapse;
       margin-left : 20px;
     }
@@ -23,6 +23,10 @@
     }
     th {
       background-color: #f2f2f2;
+    }
+    tr:hover{
+      background-color: #e0e0e0;
+      cursor: pointer; /* 마우스 포인터 변경 */
     }
     .banner {
       margin-bottom: 30px;
@@ -42,10 +46,21 @@
       border: none;
       cursor: pointer;
     }
+
     .button-container {
       position: fixed;
       bottom: 20px;
       right: 20px;
+    }
+    .button-container button {
+      background-color: #ff4d4d; 
+      color: white; 
+      border: none; 
+      padding: 10px 20px; 
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px; 
+      transition: background-color 0.3s; 
     }
   </style>
 </head>
@@ -85,9 +100,12 @@
       const row = document.createElement('tr');
       row.innerHTML = `
       <td>${reversedData.length - index}</td>
-      <td><a href="detail.html?index=${index}">${item.제목}</a></td>
+      <td>${item.제목}</td>
       <td>${item.글쓴이}</td>
       <td>${item.작성일}</td>`;
+      row.addEventListener('click', function() {
+        window.location.href = `detail.html?index=${index}`;
+      });
       tableBody.appendChild(row);
     });
   }

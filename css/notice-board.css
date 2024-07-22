@@ -4,12 +4,13 @@
   margin: 20px;
   position: relative;
   left : 1%; 
+  
 }
 
 .notice-board-header {
   font-size: 1.5em;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .notice-board table {
@@ -17,8 +18,11 @@
   border-collapse: collapse;
 }
 
+.notice-board tr{
+  border : 1px solid rgb(206, 204, 204);
+}
+
 .notice-board th, .notice-board td {
-  border: none; /* 테두리를 없앰 */
   padding: 10px;
   text-align: left;
 }
