@@ -1,0 +1,82 @@
+.banner {
+  width: 100%;
+  max-width: 2400px;
+  aspect-ratio: 30/8;
+  background-color: #ddd;
+  overflow: hidden;
+  position: relative;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.banner img.active {
+  opacity: 1;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.calendar-container {
+  width: 20%;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.calendar-header button {
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: transparent;
+  color: black;
+  border: none;
+  cursor: pointer;
+}
+
+
+.calendar-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.date-display {
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  background-color: #f0f0f0;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.event-list {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #f9f9f9;
+  height: 150px;
+  overflow-y: auto;
+}
+
+.event {
+  background-color: #ffcccb; /* 연붉은색 */
+  margin: 3px;
+  padding: 2px;
+  border-radius: 3px;
+  padding-left:15px;
+}
+
+.notice-board {
+  width: 60%;
+}

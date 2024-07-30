@@ -1,0 +1,104 @@
+header {
+  position: fixed; 
+  width: 100%;
+  top: auto;
+  bottom:0;
+  transition: top 0.0001s ease-in-out, bottom 0.0001s ease-in-out;
+}
+header.sticky{
+  bottom: auto;
+}
+body{
+  height: 6000px;
+}
+section {
+  width: 100%;
+  height: 72vh;
+  margin :0;
+  padding:0;
+}
+.section1 {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* 섹션의 높이를 전체 화면으로 설정 */
+  overflow: hidden;
+  background-color: black;
+}
+#background-video1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 부모 요소를 완전히 채우도록 비율 유지 */
+  transform: translate(-50%, -50%);
+  clip-path: inset(0 0 5% 0); /* 아래쪽 5%를 잘라냄 */
+
+}
+.section2 {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* 화면 전체 높이를 차지 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black; /* 비디오 외부 영역에 배경색 추가 */
+}
+
+#background-video2 {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 비디오의 전체 내용이 보이도록 */
+  margin-top: -50px;
+}
+
+
+.section3 {
+  margin-top: 500px;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  justify-items: center;
+  align-items: center;
+}
+.image {
+  width: 80%;
+  height: 80%;
+  border-radius: 10px;
+}
+.visible {
+  opacity: 1 !important;
+}
+h1{
+  font-size: 4em;
+  color: white;
+  font-family: sans-serif;
+  position: absolute;
+  top:10px;
+  left: 200px;
+  animation: slideup 1.5s ease-in-out;
+}
+@keyframes slideup{
+  from{
+    left: -100px;
+    opacity: 0;
+  }
+  to{
+    left: 200px;
+    opacity: 1;
+  }
+}
+@keyframes slidedown{
+  from{
+    left: 200px;
+    opacity: 1;
+  }
+  to{
+    left: -300px;
+    opacity: 0;
+  }
+}

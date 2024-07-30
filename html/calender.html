@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>동아리 소개</title>
+  <link rel="icon" href="../img/certis배너무당벌레.png" type="image/png">
+  <style>
+    .calendar-container {
+      margin-bottom: 50px;
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .calendar-header button {
+      padding: 10px 15px;
+      background-color: #ff0000;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .calendar-header button:hover {
+      background-color: #b30015;
+    }
+    .calendar-header h2 {
+      margin: 10px;
+      font-size: 30px;
+    }
+    #calendar1, #calendar2 {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-gap: 5px;
+      padding: 10px;
+    }
+    .day {
+      border: 1px solid #ccc;
+      min-height: 120px;
+      position: relative;
+      background-color: white;
+    }
+    .day-header {
+      border-bottom: 1px solid #ccc;
+      background-color: #f0f0f0;
+      padding: 5px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .event {
+      background-color: #ffcccb;
+      margin: 2%;
+      padding: 0.5px;
+      border-radius: 5px;
+      position: relative;
+      padding-left:10px;
+    }
+    .event button {
+      position: absolute;
+      right: 2px;
+      background-color: #ffcccb;
+      color: black;
+      border: none;
+      cursor: pointer;
+      width: 15px;
+      height: 15px;
+      font-size: 10px;
+    }
+    hr {
+      margin: 50px 0;
+      border: 1px solid #e7e6e6;
+    }
+    #prevMonth1, #prevMonth2 {
+      margin-left: 15px; 
+      font-size:20px;
+    }
+    #nextMonth1, #nextMonth2 {
+      margin-right: 15px; 
+      font-size:20px;
+    }
+  </style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+<div class="banner"></div>
+
+<hr>
+
+<div class="calendar-container">
+  <h1 style="text-align: center">내부 행사</h1>
+  <div class="calendar-header">
+    <button id="prevMonth1"><</button>
+    <h2 id="currentMonth1"></h2>
+    <button id="nextMonth1">></button>
+  </div>
+  <div id="calendar1"></div>
+</div>
+
+<hr>
+
+<div class="calendar-container">
+  <h1 style="text-align: center">외부 행사</h1>
+  <div class="calendar-header">
+    <button id="prevMonth2" ><</button>
+    <h2 id="currentMonth2"></h2>
+    <button id="nextMonth2">></button>
+  </div>
+  <div id="calendar2"></div>
+</div>
+
+<hr>
+
+<div>
+  <h2>이벤트 추가</h2>
+  <label for="eventDate">날짜:</label>
+  <input type="date" id="eventDate">
+  <label for="eventTitle">제목:</label>
+  <input type="text" id="eventTitle">
+  <label for="eventType">타입:</label>
+  <select id="eventType">
+    <option value="internal">내부 행사</option>
+    <option value="external">외부 행사</option>
+  </select>
+  <button onclick="addEvent()">추가</button>
+</div>
+
+<script src="../js/navi.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    let internalEvents = JSON.parse(localStorage.getItem('internalEvents')) || [];
+    let externalEvents = JSON.parse(localStorage.getItem('externalEvents')) || [];
+    let currentDate1 = new Date();
+    let currentDate2 = new Date();
+
+    function createCalendar(calendarId, year, month, events) {
+      const calendar = document.getElementById(calendarId);
+      calendar.innerHTML = '';
+
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const startDay = new Date(year, month, 1).getDay();
+
+      for (let i = 0; i < startDay; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.classList.add('day');
+        calendar.appendChild(emptyCell);
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const cell = document.createElement('div');
+        cell.classList.add('day');
+
+        const header = document.createElement('div');
+        header.classList.add('day-header');
+        header.textContent = day;
+        cell.appendChild(header);
+
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const dayEvents = events.filter(event => event.date === dateStr);
+
+        dayEvents.forEach((event, index) => {
+          const eventDiv = document.createElement('div');
+          eventDiv.classList.add('event');
+          eventDiv.textContent = event.title;
+
+          const deleteBtn = document.createElement('button');
+          deleteBtn.textContent = 'x';
+          deleteBtn.onclick = function() {
+            deleteEvent(calendarId, dateStr, index);
+          };
+
+          eventDiv.appendChild(deleteBtn);
+          cell.appendChild(eventDiv);
+        });
+
+        calendar.appendChild(cell);
+      }
+    }
+
+    function updateCalendarHeaders() {
+      const options = { year: 'numeric', month: 'long' };
+      document.getElementById('currentMonth1').textContent = currentDate1.toLocaleDateString('ko-KR', options);
+      document.getElementById('currentMonth2').textContent = currentDate2.toLocaleDateString('ko-KR', options);
+    }
+
+    function addEvent() {
+      const date = document.getElementById('eventDate').value;
+      const title = document.getElementById('eventTitle').value;
+      const type = document.getElementById('eventType').value;
+
+      if (date && title) {
+        const event = { date, title };
+        if (type === 'internal') {
+          internalEvents.push(event);
+          localStorage.setItem('internalEvents', JSON.stringify(internalEvents));
+          createCalendar('calendar1', currentDate1.getFullYear(), currentDate1.getMonth(), internalEvents);
+        } else if (type === 'external') {
+          externalEvents.push(event);
+          localStorage.setItem('externalEvents', JSON.stringify(externalEvents));
+          createCalendar('calendar2', currentDate2.getFullYear(), currentDate2.getMonth(), externalEvents);
+        }
+      } else {
+        alert('날짜와 제목을 입력하세요.');
+      }
+    }
+
+    function deleteEvent(calendarId, dateStr, index) {
+      if (calendarId === 'calendar1') {
+        internalEvents = internalEvents.filter((event, i) => !(event.date === dateStr && i === index));
+        localStorage.setItem('internalEvents', JSON.stringify(internalEvents));
+        createCalendar('calendar1', currentDate1.getFullYear(), currentDate1.getMonth(), internalEvents);
+      } else if (calendarId === 'calendar2') {
+        externalEvents = externalEvents.filter((event, i) => !(event.date === dateStr && i === index));
+        localStorage.setItem('externalEvents', JSON.stringify(externalEvents));
+        createCalendar('calendar2', currentDate2.getFullYear(), currentDate2.getMonth(), externalEvents);
+      }
+    }
+
+    document.getElementById('prevMonth1').addEventListener('click', function() {
+      currentDate1.setMonth(currentDate1.getMonth() - 1);
+      createCalendar('calendar1', currentDate1.getFullYear(), currentDate1.getMonth(), internalEvents);
+      updateCalendarHeaders();
+    });
+
+    document.getElementById('nextMonth1').addEventListener('click', function() {
+      currentDate1.setMonth(currentDate1.getMonth() + 1);
+      createCalendar('calendar1', currentDate1.getFullYear(), currentDate1.getMonth(), internalEvents);
+      updateCalendarHeaders();
+    });
+
+    document.getElementById('prevMonth2').addEventListener('click', function() {
+      currentDate2.setMonth(currentDate2.getMonth() - 1);
+      createCalendar('calendar2', currentDate2.getFullYear(), currentDate2.getMonth(), externalEvents);
+      updateCalendarHeaders();
+    });
+
+    document.getElementById('nextMonth2').addEventListener('click', function() {
+      currentDate2.setMonth(currentDate2.getMonth() + 1);
+      createCalendar('calendar2', currentDate2.getFullYear(), currentDate2.getMonth(), externalEvents);
+      updateCalendarHeaders();
+    });
+
+    createCalendar('calendar1', currentDate1.getFullYear(), currentDate1.getMonth(), internalEvents);
+    createCalendar('calendar2', currentDate2.getFullYear(), currentDate2.getMonth(), externalEvents);
+    updateCalendarHeaders();
+    window.addEvent = addEvent;
+  });
+</script>
+</body>
+</html>
