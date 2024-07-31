@@ -1,0 +1,74 @@
+.calendar-container {
+  margin-bottom: 50px;
+}
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+.calendar-header button {
+  padding: 10px 15px;
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.calendar-header button:hover {
+  background-color: #b30015;
+}
+.calendar-header h2 {
+  margin: 10px;
+  font-size: 30px;
+}
+#calendar1, #calendar2 {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 5px;
+  padding: 10px;
+}
+.day {
+  border: 1px solid #ccc;
+  min-height: 120px;
+  position: relative;
+  background-color: white;
+}
+.day-header {
+  border-bottom: 1px solid #ccc;
+  background-color: #f0f0f0;
+  padding: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+.event {
+  background-color: #ffcccb;
+  margin: 2%;
+  padding: 0.5px;
+  border-radius: 5px;
+  position: relative;
+  padding-left:10px;
+}
+.event button {
+  position: absolute;
+  right: 2px;
+  background-color: #ffcccb;
+  color: black;
+  border: none;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  font-size: 10px;
+}
+hr {
+  margin: 50px 0;
+  border: 1px solid #d4cccc;
+}
+#prevMonth1, #prevMonth2 {
+  margin-left: 15px; 
+  font-size:20px;
+}
+#nextMonth1, #nextMonth2 {
+  margin-right: 15px; 
+  font-size:20px;
+}

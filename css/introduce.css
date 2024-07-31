@@ -23,6 +23,8 @@ section {
   height: 100vh; /* 섹션의 높이를 전체 화면으로 설정 */
   overflow: hidden;
   background-color: black;
+  opacity: 0.2;
+  animation : fadein 10s forwards;
 }
 #background-video1 {
   position: absolute;
@@ -82,23 +84,11 @@ h1{
   left: 200px;
   animation: slideup 1.5s ease-in-out;
 }
-@keyframes slideup{
+@keyframes fadein{
   from{
-    left: -100px;
-    opacity: 0;
+    opacity: 0.2;
   }
   to{
-    left: 200px;
     opacity: 1;
-  }
-}
-@keyframes slidedown{
-  from{
-    left: 200px;
-    opacity: 1;
-  }
-  to{
-    left: -300px;
-    opacity: 0;
   }
 }
