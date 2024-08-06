@@ -8,8 +8,48 @@ header {
 header.sticky{
   bottom: auto;
 }
+
+.upanimation {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  transition-delay: 0s;
+}
+
+.upanimation h1{
+  font-size: 50px;
+}
+
+.upanimation p{
+  font-size: 22px;
+}
+
+
+.upanimation.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.upanimation img {
+  width: 350px; /* 이미지의 최대 너비 */
+  height: auto;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); 
+  border-radius: 20px;
+
+}
+
+.appearanimation {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+.appearanimation.visible {
+  opacity: 1;
+}
+
 body{
-  height: 6000px;
+  height: 12000px;
+  padding: 0px;
 }
 section {
   width: 100%;
@@ -26,6 +66,7 @@ section {
   opacity: 0.2;
   animation : fadein 10s forwards;
 }
+  
 #background-video1 {
   position: absolute;
   top: 50%;
@@ -56,34 +97,56 @@ section {
 
 
 .section3 {
-  margin-top: 500px;
-  padding: 20px;
-  opacity: 0;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 200px;
+  margin-bottom: -100px;
   transition: opacity 1s ease-in-out;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 20px;
-  justify-items: center;
-  align-items: center;
+  opacity: 0;
 }
-.image {
-  width: 80%;
-  height: 80%;
-  border-radius: 10px;
+
+.section4{
+  background-color: black;
+  height: 3000px;
+  color: white;
 }
+
+.section4 img{
+  box-shadow: 0 4px 6px rgba(255,255,255);
+}
+
+.textsection{
+  font-size: 30px;
+  margin-bottom: -100px;
+}
+
+.info-box{
+  background-color: #f1f3f5;
+  padding : 50px;
+  height: 180px;
+  border-radius: 20px;
+  text-align: center;
+  width: 300px;
+
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
 .visible {
   opacity: 1 !important;
 }
-h1{
-  font-size: 4em;
-  color: white;
-  font-family: sans-serif;
-  position: absolute;
-  top:10px;
-  left: 200px;
-  animation: slideup 1.5s ease-in-out;
+
+.info-box h1{
+  color:gray;
+  font-weight: bold;
 }
+
+.info-box p {
+  margin-top:30px;
+  font-size: 70px;
+  font-weight: bold;
+}
+
 @keyframes fadein{
   from{
     opacity: 0.2;

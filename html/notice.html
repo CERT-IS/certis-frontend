@@ -8,26 +8,32 @@
   <link rel="stylesheet" href="../css/notice.css">
 </head>
 <body>
-<div id="header-placeholder"></div>
-<div class="banner"></div>
-<div class="button-container">
-  <button onclick="window.location.href='notice_input.html'" >글 작성</button>
-</div>
-<div>
-  <table>
-    <thead>
-      <tr>
-        <th>번호</th>
-        <th>제목</th>
-        <th>글쓴이</th>
-        <th>작성일</th>
-      </tr>
-    </thead>
-    <tbody id="board-body">
-    </tbody>
-  </table>
-</div>
-<script src="../js/navi.js"></script>
-<script src="../js/notice.js"></script>
+  <div id="header-placeholder"></div>
+  <div class="banner"></div>
+  <div class="content-container">
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>글쓴이</th>
+            <th>작성일</th>
+          </tr>
+        </thead>
+        <tbody id="board-body">
+        </tbody>
+      </table>
+    </div>
+    <div class="button-container">
+      <button onclick="window.location.href='notice_input.html'">글 작성</button>
+    </div>
+  </div>
+  <footer id="footer">
+  </footer>
+  <script src="../js/footer.js"></script>
+
+  <script src="../js/navi.js"></script>
+  <script src="../js/notice.js"></script>
 </body>
 </html>
