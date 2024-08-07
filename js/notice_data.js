@@ -14,9 +14,7 @@ function loadPostDetail(index) {
   const data = JSON.parse(localStorage.getItem('boardData')) || [];
   if (data[index]) {
     document.getElementById('post-title').innerText = data[index].제목;
-    document.getElementById('post-author').innerText = data[index].글쓴이;
     document.getElementById('post-date').innerText = data[index].작성일;
-    document.getElementById('post-views').innerText = data[index].조회수 || 0;
     document.getElementById('post-content').innerText = data[index].내용;
   }
 }
