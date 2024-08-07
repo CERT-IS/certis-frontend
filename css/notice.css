@@ -1,21 +1,14 @@
-h1 {
-  margin-left: 10px; /* 왼쪽 여백을 추가하여 오른쪽으로 이동 */
-  margin-top: 20px;  /* 위쪽 여백 추가 */
-  margin-bottom: 20px; /* 아래쪽 여백 추가 */
-}
 table {
-  width: 99%;
+  width: 80%;
   border-collapse: collapse;
-  margin-left : 20px;
+  margin: 0 auto;
 }
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
+td {
+  border-radius: 10px;
+  padding: 25px;
+  text-align: left;
 }
-th {
-  background-color: #f2f2f2;
-}
+
 tr:hover{
   background-color: #e0e0e0;
   cursor: pointer; /* 마우스 포인터 변경 */
@@ -61,4 +54,5 @@ tr:hover{
 
 body{
   padding: 70px 0 0 0;
+  height: 3000px;
 }

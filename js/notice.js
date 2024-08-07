@@ -10,10 +10,11 @@ function loadBoardData() {
   reversedData.forEach((item, index) => {
     const row = document.createElement('tr');
     row.innerHTML = `
-    <td>${reversedData.length - index}</td>
-    <td>${item.제목}</td>
-    <td>${item.글쓴이}</td>
-    <td>${item.작성일}</td>`;
+    <td >
+        <span style="font-weight:bold;font-size:1.5em;">${item.제목}</span><br>
+        <span style="color:gray; margin-top:3px;">${item.작성일}</span>
+    </td>
+    `;
     row.addEventListener('click', function() {
       window.location.href = `notice_data.html?index=${index}`;
     });
