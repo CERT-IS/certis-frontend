@@ -7,9 +7,46 @@
   <link rel="stylesheet" href="../css/navi.css">
   <link rel="icon" href="../img/certis배너무당벌레.png" type="image/png">
   <link rel="stylesheet" href="../css/introduce.css">
+  <style>
+    .upanimation {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease-out, transform 0.5s ease-in-out;
+      will-change: opacity, transform;
+    }
+    
+    .upanimation h1{
+      font-size: 50px;
+    }
+    
+    .upanimation p{
+      font-size: 22px;
+    }
+    
+    
+    .upanimation.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .upanimation img {
+      width: 350px; 
+      height: auto;
+      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); 
+      border-radius: 10px;
+    }
+    
+    .appearanimation {
+      opacity: 0;
+      transition: opacity 0.5s ease-out;
+      will-change: opacity;
+    }
+    
+    .appearanimation.visible {
+      opacity: 1;
+    }
+  </style>
 </head>
-<script src="../js/navi.js"></script>
-<script src="../js/introduce.js"></script>
 <body>
   <div id="header-placeholder"></div>
   <div class="banner"></div>
@@ -48,17 +85,17 @@
           <p>해입교는 해킹 입문 교육으로 해킹과 보안을 처음 접하시는 분들을 위한 교육입니다.</p>
       </div>
       <div style="display: flex; justify-content: space-around; gap: 40px; margin-left: 70px;">
-          <img src="../img/해입교3.jpg" class="upanimation">
-          <img src="../img/해입교2.jpg" class="upanimation">
+          <img src="../img/해입교3.jpg" class="upanimation" >
+          <img src="../img/해입교2.jpg" class="upanimation" >
       </div>
   </div>
   </section>
   <section>
-  <div class="upanimation" style="display: flex; flex-wrap: wrap; margin-top:100px; ">
-      <div style="display: flex; flex-direction: column; margin-left: 50px;">
+  <div class="upanimation" style="display: flex; flex-wrap: wrap; margin-top:100px;">
+      <div style="display: flex; flex-direction: column; margin-left: 150px;">
           <div style="display: flex; justify-content: space-around; gap: 60px;">
-              <img src="../img/해입교1.jpg" >
-              <img src="../img/해입교4.jpg" >
+              <img src="../img/해입교1.jpg" decoding="async">
+              <img src="../img/해입교4.jpg" decoding="async">
           </div>
       </div>
       <div style="display: flex; flex-direction: column; justify-content: center; text-align:right; margin-left: 100px">
@@ -73,8 +110,8 @@
         <h1>프로젝트 & 스터디</h1>
     </div>
     <div style="display: flex; justify-content: space-around; gap: 40px; margin-left: 70px;">
-        <img src="../img/study1.png" class="upanimation">
-        <img src="../img/study2.png" class="upanimation">
+        <img src="../img/study1.png" class="upanimation" >
+        <img src="../img/study2.png" class="upanimation"  >
     </div>
 </div>
   </section>
@@ -88,14 +125,14 @@
           <p>학생들을 대상으로 교육을 진행하는 행사 입니다</p>
       </div>
       <div style="display: flex; justify-content: space-around; width:50%; margin-top:150px;">
-          <img src="../img/Gotogether.jpeg" style="width: 80%;">
+          <img src="../img/Gotogether.jpeg" style="width: 70%;">
        </div>
   </div>
 
   <div style="display: flex; flex-wrap: wrap; margin-top: 300px;">
-    <div style="display: flex; gap:40px; width: 40%;">
-            <img src="../img/부부해킹캠프.jpg" style="width: 70%; height: auto; margin-left:100px" class="upanimation">
-            <img src="../img/해킹캠프2.jpeg" style="width: 70%; height: auto;" class="upanimation">
+    <div style="display: flex; gap:100px; width: 40%;" class="upanimation">
+            <img src="../img/부부해킹캠프.jpg" style="width: 60%; height: auto; margin-left:100px"   decoding="async">
+            <img src="../img/해킹캠프2.jpeg" style="width: 60%; height: auto;"   decoding="async">
     </div>
     <div class="upanimation" style="display: flex; flex-direction: column; justify-content: center; text-align: right; padding-left: 60px; width: 50%;">
         <h1>해킹 캠프</h1>
@@ -107,10 +144,10 @@
   <h1 style="color: white; text-align:center" class="appearanimation">외부 세미나 행사와 교육 프로그램</h1>
 </div>
 <div class="exgrid">
-  <img src="../img/부울.jpg" class="appearanimation" style="width: 700px;  grid-area:img1; ">
-  <img src="../img/화햇.jpg" class="appearanimation" style="grid-area:img2; margin-top:200px; ">
-  <img src="../img/동환사진.jpg" class="appearanimation" style="grid-area:img3; margin-top:-100px;" >
-  <img src="../img/시큐리티캠퍼스사진.jpg" class="appearanimation" style="width: 700px; margin-top:100px; grid-area:img4 ;" >
+  <img src="../img/부울.jpg" class="appearanimation" style="width: 700px;  grid-area:img1;"  decoding="async">
+  <img src="../img/화햇.jpg" class="appearanimation" style="grid-area:img2; margin-top:200px; " decoding="async">
+  <img src="../img/동환사진.jpg" class="appearanimation" style="grid-area:img3; margin-top:-100px;"  decoding="async">
+  <img src="../img/시큐리티캠퍼스사진.jpg" class="appearanimation" style="width: 700px; margin-top:100px; grid-area:img4 ;"  decoding="async">
 </div>
   </section>
   <section class="section5"> 
@@ -284,7 +321,8 @@
       </div>
     </div>
   </section>
-
+  <script src="../js/navi.js"></script>
+  <script src="../js/introduce.js"></script>
 </body>
 <footer id="footer">
 </footer>
