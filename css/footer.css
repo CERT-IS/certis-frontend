@@ -26,6 +26,12 @@ footer p {
   margin: 0 200px 20px 60px;
 }
 
+.text-container img{
+  cursor: pointer;
+  margin-left: 50px;
+}
+
+
 .logo img{
   width: 50px;
   height: auto;
@@ -36,3 +42,4 @@ footer p {
   height: auto;
   margin-left: 20px;
 }
+

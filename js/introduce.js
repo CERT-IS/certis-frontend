@@ -1,13 +1,10 @@
 function handleScroll() {
-  const header = document.querySelector('header');
-  const section2 = document.querySelector('.section2');
-  const section3 = document.querySelector('.section3');
-  const scrollY = window.scrollY;
   const windowHeight = window.innerHeight;
+ 
+  const header = document.querySelector('header');
   const headerHeight = header.offsetHeight;
-
   const triggerPoint = windowHeight - headerHeight;
-
+  const scrollY = window.scrollY;
   if (scrollY >= triggerPoint) {
     header.style.top = '0px';
   } else {
@@ -16,6 +13,7 @@ function handleScroll() {
     header.style.bottom = 'auto';
   }
 
+  const section3 = document.querySelector('.section3');
   const section3Top = section3.getBoundingClientRect().top;
   if (section3Top < windowHeight) {
     section3.classList.add('visible');
@@ -38,9 +36,18 @@ function handleScroll() {
  });
 }
 
+window.addEventListener('resize', handleResize);
+
 function handleResize() {
   handleScroll();
 }
+
+window.addEventListener('load', function() {
+  window.addEventListener('scroll', initialScroll, { once: true });
+  handleScroll(); 
+});
+
+
 
 function initialScroll() {
   const header = document.querySelector('header');
@@ -58,9 +65,3 @@ function initialScroll() {
   window.addEventListener('scroll', handleScroll);
 }
 
-window.addEventListener('load', function() {
-  window.addEventListener('scroll', initialScroll, { once: true });
-  handleScroll(); 
-});
-
-window.addEventListener('resize', handleResize);
