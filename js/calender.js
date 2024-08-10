@@ -1,9 +1,10 @@
-
 document.addEventListener('DOMContentLoaded', function() {
   let internalEvents = JSON.parse(localStorage.getItem('internalEvents')) || [];
-  let externalEvents = JSON.parse(localStorage.getItem('externalEvents')) || [];
-  let currentDate1 = new Date();
-  let currentDate2 = new Date();
+  let currentDate = new Date();
+
+  function generateUniqueId() {
+    return '_' + Math.random().toString(36).substr(2, 9);
+  }
 
   function createCalendar(calendarId, year, month, events) {
     const calendar = document.getElementById(calendarId);
@@ -22,98 +23,139 @@ document.addEventListener('DOMContentLoaded', function() {
       const cell = document.createElement('div');
       cell.classList.add('day');
 
+      const week = new Date(year, month, day);
+      const dayofweek = week.getDay();
+
+      if (dayofweek === 0 || dayofweek === 6) {
+        cell.classList.add('weekend');
+      }
+
       const header = document.createElement('div');
       header.classList.add('day-header');
       header.textContent = day;
       cell.appendChild(header);
 
       const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-      const dayEvents = events.filter(event => event.date === dateStr);
-
-      dayEvents.forEach((event, index) => {
-        const eventDiv = document.createElement('div');
-        eventDiv.classList.add('event');
-        eventDiv.textContent = event.title;
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'x';
-        deleteBtn.onclick = function() {
-          deleteEvent(calendarId, dateStr, index);
-        };
-
-        eventDiv.appendChild(deleteBtn);
-        cell.appendChild(eventDiv);
-      });
-
       calendar.appendChild(cell);
+
+      const dayEvents = events.filter(event => new Date(event.startDate) <= new Date(dateStr) && new Date(event.endDate) >= new Date(dateStr));
+
+      dayEvents.forEach((element) => {
+        const startDay = new Date(element.startDate).getDate();
+        const endDay = new Date(element.endDate).getDate();
+
+        const eventDiv = document.createElement('div');
+        eventDiv.classList.add('multi-day');        
+        eventDiv.style.backgroundColor = element.color; // 고정된 색상 적용
+        eventDiv.style.marginLeft = '-1px'; // 이벤트를 오른쪽으로 약간 이동
+
+
+        if (startDay === day && endDay === day) {
+          eventDiv.style.borderRadius = '5px';
+          eventDiv.style.width = 'calc(100% + 2px)';
+          eventDiv.textContent = element.title;
+
+          const deleteBtn = document.createElement('button');
+          deleteBtn.classList.add('delete-btn'); 
+          deleteBtn.textContent = 'x';
+          deleteBtn.style.float = 'right';
+          deleteBtn.onclick = function () {
+            deleteEvent(element.id);
+          };
+          eventDiv.appendChild(deleteBtn);
+        }
+        else if (startDay === day) {
+          eventDiv.style.borderTopLeftRadius = '5px';
+          eventDiv.style.borderBottomLeftRadius = '5px';
+          eventDiv.style.width = 'calc(100% + 2px)';
+          eventDiv.textContent = element.title;
+
+        } else if (endDay === day) {
+          eventDiv.style.borderTopRightRadius = '5px';
+          eventDiv.style.borderBottomRightRadius = '5px';
+          eventDiv.style.width = 'calc(100% + 2px)';
+
+          const deleteBtn = document.createElement('button');
+          deleteBtn.classList.add('delete-btn'); 
+
+          deleteBtn.textContent = 'x';
+          deleteBtn.style.float = 'right';
+          deleteBtn.onclick = function() {
+              deleteEvent(element.id);
+          };
+          eventDiv.appendChild(deleteBtn);
+        } else if (day > startDay && day < endDay) {
+          eventDiv.style.width = 'calc(100% + 2px)';
+        }
+
+        cell.appendChild(eventDiv);    
+      });
     }
   }
 
   function updateCalendarHeaders() {
     const options = { year: 'numeric', month: 'long' };
-    document.getElementById('currentMonth1').textContent = currentDate1.toLocaleDateString('ko-KR', options);
-    document.getElementById('currentMonth2').textContent = currentDate2.toLocaleDateString('ko-KR', options);
+    document.getElementById('currentMonth').textContent = currentDate.toLocaleDateString('ko-KR', options);
   }
 
   function addEvent() {
-    const date = document.getElementById('eventDate').value;
     const title = document.getElementById('eventTitle').value;
-    const type = document.getElementById('eventType').value;
-
-    if (date && title) {
-      const event = { date, title };
-      if (type === 'internal') {
-        internalEvents.push(event);
-        localStorage.setItem('internalEvents', JSON.stringify(internalEvents));
-        createCalendar('calendar1', currentDate1.getFullYear(), currentDate1.getMonth(), internalEvents);
-      } else if (type === 'external') {
-        externalEvents.push(event);
-        localStorage.setItem('externalEvents', JSON.stringify(externalEvents));
-        createCalendar('calendar2', currentDate2.getFullYear(), currentDate2.getMonth(), externalEvents);
-      }
-    } else {
-      alert('날짜와 제목을 입력하세요.');
-    }
-  }
-
-  function deleteEvent(calendarId, dateStr, index) {
-    if (calendarId === 'calendar1') {
-      internalEvents = internalEvents.filter((event, i) => !(event.date === dateStr && i === index));
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+  
+    if (startDate && endDate && title) {
+      const event = { 
+        id: generateUniqueId(), 
+        title, 
+        startDate, 
+        endDate, 
+        color: 'rgb(255, 157, 157)' // 고정된 색상 
+      };
+  
+      internalEvents.push(event);
       localStorage.setItem('internalEvents', JSON.stringify(internalEvents));
-      createCalendar('calendar1', currentDate1.getFullYear(), currentDate1.getMonth(), internalEvents);
-    } else if (calendarId === 'calendar2') {
-      externalEvents = externalEvents.filter((event, i) => !(event.date === dateStr && i === index));
-      localStorage.setItem('externalEvents', JSON.stringify(externalEvents));
-      createCalendar('calendar2', currentDate2.getFullYear(), currentDate2.getMonth(), externalEvents);
+      createCalendar('calendar', currentDate.getFullYear(), currentDate.getMonth(), internalEvents);
+      closeModal();
+    } else {
+      alert('제목과 날짜를 정확히 입력해주세요^^;;;');
     }
   }
 
-  document.getElementById('prevMonth1').addEventListener('click', function() {
-    currentDate1.setMonth(currentDate1.getMonth() - 1);
-    createCalendar('calendar1', currentDate1.getFullYear(), currentDate1.getMonth(), internalEvents);
+  function deleteEvent(eventId){
+    internalEvents = internalEvents.filter(event => event.id !== eventId);
+    localStorage.setItem('internalEvents',JSON.stringify(internalEvents));
+    createCalendar('calendar', currentDate.getFullYear(), currentDate.getMonth(), internalEvents);
+  }
+
+  function showModal(){
+    document.getElementById('eventModal').style.display = 'flex';
+  }
+
+  function closeModal(){
+    document.getElementById('eventModal').style.display = 'none';
+  }
+  
+  document.getElementById('prevMonth').addEventListener('click', function() {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    createCalendar('calendar', currentDate.getFullYear(), currentDate.getMonth(), internalEvents);
     updateCalendarHeaders();
   });
 
-  document.getElementById('nextMonth1').addEventListener('click', function() {
-    currentDate1.setMonth(currentDate1.getMonth() + 1);
-    createCalendar('calendar1', currentDate1.getFullYear(), currentDate1.getMonth(), internalEvents);
+  document.getElementById('nextMonth').addEventListener('click', function() {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    createCalendar('calendar', currentDate.getFullYear(), currentDate.getMonth(), internalEvents);
     updateCalendarHeaders();
   });
 
-  document.getElementById('prevMonth2').addEventListener('click', function() {
-    currentDate2.setMonth(currentDate2.getMonth() - 1);
-    createCalendar('calendar2', currentDate2.getFullYear(), currentDate2.getMonth(), externalEvents);
-    updateCalendarHeaders();
-  });
-
-  document.getElementById('nextMonth2').addEventListener('click', function() {
-    currentDate2.setMonth(currentDate2.getMonth() + 1);
-    createCalendar('calendar2', currentDate2.getFullYear(), currentDate2.getMonth(), externalEvents);
-    updateCalendarHeaders();
-  });
-
-  createCalendar('calendar1', currentDate1.getFullYear(), currentDate1.getMonth(), internalEvents);
-  createCalendar('calendar2', currentDate2.getFullYear(), currentDate2.getMonth(), externalEvents);
+  createCalendar('calendar', currentDate.getFullYear(), currentDate.getMonth(), internalEvents);
   updateCalendarHeaders();
   window.addEvent = addEvent;
+
+
+  document.getElementById('addEventButton').addEventListener('click', showModal);
+  document.getElementById('saveEvent').addEventListener('click', addEvent);
+  document.getElementById('closeModal').addEventListener('click', closeModal);
+
+  createCalendar('calendar', currentDate.getFullYear(), currentDate.getMonth(), internalEvents);
+  updateCalendarHeaders();
 });

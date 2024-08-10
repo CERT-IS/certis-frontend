@@ -12,41 +12,30 @@
 <div class="banner"></div>
 
 <div class="calendar-container">
-  <h1 style="text-align: center">내부 행사</h1>
   <div class="calendar-header">
-    <button id="prevMonth1"><</button>
-    <h2 id="currentMonth1"></h2>
-    <button id="nextMonth1">></button>
+    <button id="prevMonth"><</button>
+    <h2 id="currentMonth"></h2>
+    <button id="nextMonth">></button>
   </div>
-  <div id="calendar1"></div>
+  <div id="calendar"></div>
 </div>
 
-<hr>
+<hr style="border-top: 2px dashed #a7a7a7; width:85%; margin: 0 auto;">
 
-<div class="calendar-container">
-  <h1 style="text-align: center">외부 행사</h1>
-  <div class="calendar-header">
-    <button id="prevMonth2" ><</button>
-    <h2 id="currentMonth2"></h2>
-    <button id="nextMonth2">></button>
+<button id = "addEventButton">이벤트 추가</button>
+
+<div id="eventModal">
+  <div id="modalContent">
+    <label for="eventTitle">제목:</label>
+            <input type="text" id="eventTitle"><br><br>
+            <label for="startDate">시작일:</label>
+            <input type="date" id="startDate"><br><br>
+            <label for="endDate">종료일:</label>
+            <input type="date" id="endDate"><br><br>
+            <button id="saveEvent">저장</button>
+            <button id="closeModal">닫기</button>
   </div>
-  <div id="calendar2"></div>
-</div>
 
-<hr>
-
-<div>
-  <h2>이벤트 추가</h2>
-  <label for="eventDate">날짜:</label>
-  <input type="date" id="eventDate">
-  <label for="eventTitle">제목:</label>
-  <input type="text" id="eventTitle">
-  <label for="eventType">타입:</label>
-  <select id="eventType">
-    <option value="internal">내부 행사</option>
-    <option value="external">외부 행사</option>
-  </select>
-  <button onclick="addEvent()">추가</button>
 </div>
 
 <script src="../js/navi.js"></script>
