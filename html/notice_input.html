@@ -15,7 +15,10 @@
 <div class="form-container">
   <input type="text" id="title" placeholder="제목">
   <textarea id="content" rows="10" placeholder="내용"></textarea>
-  <button onclick="addPost()">글 작성</button>
+  <input type="file" id="file-upload" accept=".jpg, .jpeg, .png, .pdf, .doc, .docx">
+</div>
+<div class="button-container">
+  <button class="button" onclick="addPost()">글 작성</button>
 </div>
 </body>
 <footer id="footer">

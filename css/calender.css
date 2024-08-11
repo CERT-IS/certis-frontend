@@ -122,7 +122,9 @@ hr {
   font-size: 15px;
   display: flex;
   align-items: center; 
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.7);
 }
+
 .delete-btn {
   background-color: inherit; 
   border: none;              
@@ -132,10 +134,3 @@ hr {
 
 }
 
-.delete-btn:focus {
-  outline: none;            
-}
-
-.a{
-  background-color: rgb(255, 157, 157);
-}

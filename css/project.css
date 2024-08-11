@@ -3,6 +3,9 @@ body{
   height: 2500px;
   
 }
+h1 {
+  margin: 100px 0 20px 180px; font-size:2.5em;
+}
 
 .form-container button {
   padding: 20px 20px;
